@@ -2,9 +2,11 @@ const fs = require('fs');
 const path = require('path');
 
 const request = require('request');
+
 const getMedia = require('./fetchMedia.js');
 const checkFolder = require('./logica.js');
 const readFiles = require('./logica.js');
+const downloadFiles = require('./logica.js');
 
 getMedia.getMedia( ( errorMessage, dataRequested ) => {
     if (errorMessage) {
@@ -20,19 +22,23 @@ var mediaObject = [
     { Name: 'Tekus_BG2.jpg', Duration: '10' },
     { Name: 'Cronometro.mp4', Duration: '10' } ]
 
+var files = [];
+for(var i = 0; i < mediaObject.length; i++) {
+    files[i] = mediaObject[i].Name;
+}
+
+//console.log(files);
 
 // check Media folder existence on C drive
-var folder = 'C:\\Menu';
+var folder = 'C:\\Media';
 var check = checkFolder.checkMediaFolder(folder);
 
-// if folder already exists
+// Check if folder already exists
 if (!check) {
     // see avaidable files inside media folder
     var filesArr = readFiles.readMediaFiles(folder);
-    console.log(filesArr);
+    //console.log(filesArr);
 } else {
     // download files
-    function downloadFiles() {
-        
-    };
+    downloadFiles.downloadMediaFiles(files);
 }
