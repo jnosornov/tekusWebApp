@@ -1,0 +1,14 @@
+{
+  "name": "tekuswebapp",
+  "version": "1.0.0",
+  "description": "This is a web app designed for Tekus to download, store and reproduce some media content.",
+  "main": "mediaController.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.83.0"
+  }
+}
