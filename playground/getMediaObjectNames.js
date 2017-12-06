@@ -7,10 +7,10 @@ var mediaObject = [
 //console.log(mediaObject[0].Name);
 //console.log(mediaObject.length);
 
-
 var files = [];
 for(var i = 0; i < mediaObject.length; i++) {
     files[i] = mediaObject[i].Name;
 }
 
 console.log(files);
+
