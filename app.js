@@ -1,57 +1,54 @@
+// built-in node modules
 const fs = require('fs');
 const path = require('path');
 
+// third party modules
 const request = require('request');
 
-const getMedia = require('./fetchMedia.js');
-const checkFolder = require('./mediaController.js');
-const readFiles = require('./mediaController.js');
-const downloadFiles = require('./mediaController.js');
-const compareArr = require('./mediaController');
+// own modules
+var fetchDataPath = './fetchMedia.js';
+var appControllerPath = './mediaController.js';
 
+const getMedia = require(fetchDataPath);
+const checkFolder = require(appControllerPath);
+const readFiles = require(appControllerPath);
+const downloadFiles = require(appControllerPath);
+const compareArr = require(appControllerPath);
+
+// fetch data from PlayList.json
 getMedia.getMedia( ( errorMessage, dataRequested ) => {
     if (errorMessage) {
         console.log(errorMessage);
     } else {
         //console.log(dataRequested);
+        //dataRequested is the body of the request
     }
 });
 
+// body data test
 var mediaObject = [ 
     { Name: 'Tekus_BG1.jpg', Duration: '5' },
     { Name: 'Arkbox.mp4', Duration: '-1' },
     { Name: 'Tekus_BG2.jpg', Duration: '10' },
     { Name: 'Cronometro.mp4', Duration: '10' } ]
 
+// populate an empty array with the media names
 var files = [];
-for(var i = 0; i < mediaObject.length; i++) {
-    files[i] = mediaObject[i].Name;
-}
-
-//console.log(files);
+var files = mediaObject.map((element, index) => mediaObject[index].Name);
 
 // check Media folder existence on C drive
 var folder = 'C:\\Media';
-var check = checkFolder.checkMediaFolder(folder);
+var checkResult = checkFolder.checkMediaFolder(folder);
 
-// Check if folder already exists
-if (!check) {
+// ask if folder already exists
+if (!checkResult) {
     // see avaidable files inside media folder
     var filesArr = readFiles.readMediaFiles(folder);
-    console.log('The orginal array is: ', files);
-    console.log('The actual array is: ', filesArr);
-    var filesArrString = filesArr.join();
-    console.log(`The files inside the Media folder are: ${filesArrString}`);
+    // compare Media folder files and original array
     var result = compareArr.compareMediaArr(filesArr, files);
-    
-    if(result === true) {
-        console.log('The array is the same');
-    } else {
-        console.log('The compared array diff result is:', result);
-        downloadFiles.downloadMediaFiles(result);
-    }
-        
+    if(result !== true) downloadFiles.downloadMediaFiles(result);
 } else {
-    // download files
+    // download all the files
     downloadFiles.downloadMediaFiles(files);
 }
+

@@ -8,9 +8,14 @@ var mediaObject = [
 //console.log(mediaObject.length);
 
 var files = [];
+var files = mediaObject.map((element, index) => mediaObject[index].Name);
+
+/*
 for(var i = 0; i < mediaObject.length; i++) {
     files[i] = mediaObject[i].Name;
 }
+*/
+
 
 console.log(files);
 

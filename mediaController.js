@@ -7,7 +7,6 @@ var checkMediaFolder = function(directory) {
     try {
         fs.statSync(directory);
     } catch(e) {
-        //console.log('folder does not exist yet');
         fs.mkdirSync(directory);
         return e;
     }
@@ -18,7 +17,6 @@ var readMediaFiles = function(directory) {
 };
 
 var fileStream;
-
 var downloadMediaFiles = function (nameFiles) {
     for(var i = 0; i < nameFiles.length; i++) { 
         fileStream = fs.createWriteStream(`C:/Media/${nameFiles[i]}`);
@@ -27,8 +25,6 @@ var downloadMediaFiles = function (nameFiles) {
 };
 
 var compareMediaArr = function (arr1, arr2) {
-    //console.log(arr1);
-    //console.log(arr2);
     if(arr1.length === arr2.length) {
         return true;
     } else {
