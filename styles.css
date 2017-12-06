@@ -1,0 +1,36 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 50px;
+}
+
+#billboard {
+    display: flex;
+    border-bottom: 2px solid #000000;
+}
+
+#billboard img {
+    padding: 20px 30px;
+    display: block;
+    /*border: 2px solid black;*/
+}
+
+#billboard .title {
+    width: 100%;
+    position: relative;
+    background-color: #ffb700;
+    /*border: 2px solid black;*/
+}
+
+
