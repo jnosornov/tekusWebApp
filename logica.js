@@ -26,8 +26,37 @@ var downloadMediaFiles = function (nameFiles) {
     }
 };
 
+var compareMediaArr = function (arr1, arr2) {
+    //console.log(arr1);
+    //console.log(arr2);
+    if(arr1.length === arr2.length) {
+        return true;
+    } else {
+        var greaterArr, lowerArr;
+        if(arr1.length > arr2.length) {
+            greaterArr = arr1;
+            lowerArr = arr2;
+        } else {
+            greaterArr = arr2;
+            lowerArr = arr1;
+        }
+
+        var arr = [];
+        var includes;
+        for(var i = 0; i < greaterArr.length; i++) {
+            includes = lowerArr.indexOf(greaterArr[i]);
+            if(includes === -1) {
+                arr.push(greaterArr[i]) ;
+            } 
+        }
+        
+        return arr;
+    }
+};
+
 module.exports = {
     checkMediaFolder,
     readMediaFiles,
-    downloadMediaFiles
+    downloadMediaFiles,
+    compareMediaArr
 };

@@ -7,6 +7,7 @@ const getMedia = require('./fetchMedia.js');
 const checkFolder = require('./logica.js');
 const readFiles = require('./logica.js');
 const downloadFiles = require('./logica.js');
+const compareArr = require('./logica');
 
 getMedia.getMedia( ( errorMessage, dataRequested ) => {
     if (errorMessage) {
@@ -36,8 +37,20 @@ var check = checkFolder.checkMediaFolder(folder);
 // Check if folder already exists
 if (!check) {
     // see avaidable files inside media folder
+    
     var filesArr = readFiles.readMediaFiles(folder);
-    //console.log(filesArr);
+    console.log(filesArr);
+    console.log(files);
+    console.log(`The files inside the Media folder are: ${filesArr}`);
+    var result = compareArr.compareMediaArr(filesArr, files);
+    
+    if(result === true) {
+        console.log('The array is the same');
+    } else {
+        console.log(result);
+        downloadFiles.downloadMediaFiles(files);
+    }
+        
 } else {
     // download files
     downloadFiles.downloadMediaFiles(files);
