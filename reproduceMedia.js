@@ -1,47 +1,51 @@
 //Selectors
+var currentVideoSelector = document.querySelector('.insertedVideo');
+var playIconSelector = document.getElementById('play_media');
+var mediaSesionSelector = document.querySelector('.media');
 
+var htmlVideo = "<video class='insertedVideo' controls autoplay><source src='C:/Media/%video%' type='video/mp4'></video>";
+var htmlImage = "<img class='insertedImage' src='C:/Media/%image%'>";
+//event to start playing media content inside Media folder
 
-
-var videoSelector = document.querySelector('.insertedVideo');
-
-
-var playMedia = document.getElementById('play_media');
-var mediaSesion = document.querySelector('.media');
-
-
-var htmlVideo = "<video class='insertedVideo' controls autoplay><source src='C:/Media/Arkbox.mp4' type='video/mp4'></video>";
-
-playMedia.addEventListener('click', function() {
-    var playMediaContainer = document.createElement('div');
-    mediaSesion.appendChild(playMediaContainer).classList.add('content');
-
-    var mediaContent = document.querySelector('.content');
-    mediaContent.insertAdjacentHTML('beforeend', htmlVideo);
-    setTimeout(() => {
-        mediaContent.removeChild(mediaContent.firstChild);
-    }, 10000);
-});
-
-
-
-
-/*
-var reproduceMedia = document.getElementById('download');
-var mediaContainer = document.getElementById('content');
-var content = document.querySelector('.content');
-*/
-//content.style.backgroundColor = 'skyblue';
-/*
-downloadState.addEventListener('click', function() {
-    mediaContainer.classList.add('content');
-    mediaContainer.style.backgroundColor('red');
-    /*console.log('Hello World, enjoy it!');
-});
-
-
-var mediaNames = [Tekus_BG1.jpg,Arkbox.mp4,Tekus_BG2.jpg,Cronometro.mp4];
+var mediaNames = ['Tekus_BG1.jpg','Arkbox.mp4','Tekus_BG2.jpg','Cronometro.mp4'];
 var mediaTimes = [5,-1,10,10];
-*/
+
+playIconSelector.addEventListener('click', function() {
+    var mediaContainerSelector = document.createElement('div');
+    mediaSesionSelector.appendChild(mediaContainerSelector).classList.add('content');
+
+    //var mediaContentSelector = document.querySelector('.content');
+    var newHtmlVideo, newHtmlImage;
+    var mediaContentSelector = document.querySelector('.content');
+
+
+    for (var i=0; i < mediaNames.length; i++) {
+        console.log('This has been repeated: ' + i + ' times');
+        if(mediaContentSelector.hasChildNodes()) {
+            mediaContentSelector.removeChild(mediaContentSelector.firstChild);
+        } 
+        playStoredMedia('Cronometro.mp4');
+        setTimeout(() => {
+            mediaContentSelector.removeChild(mediaContentSelector.firstChild);
+            playStoredMedia('Arkbox.mp4');
+        }, 5000);
+    }
+    
+    function playStoredMedia(name) {
+        var loadMedia;
+        if(name.includes('jpg')) {
+            newHtmlImage = htmlImage.replace('%image%', name);
+            loadMedia = newHtmlImage;
+        } else {
+            newHtmlVideo = htmlVideo.replace('%video%', name);
+            loadMedia = newHtmlVideo;
+        }
+    
+        mediaContentSelector.insertAdjacentHTML('afterbegin', loadMedia); 
+    }
+});
+
+
 
 //on load made a request to backend to know the media available
 
