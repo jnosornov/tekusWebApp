@@ -19,8 +19,8 @@ var timer_is_on = 0;
 function timedCount(activityTimeOut) {
     t = setTimeout(function(){ timedCount(activityTimeOut); }, 1000);
     timeElapsed = timeElapsed + 1;
-    /*console.log('activity time out: ' + activityTimeOut);
-    console.log('time elapsed: ' + timeElapsed);*/
+    console.log('activity time out: ' + activityTimeOut);
+    console.log('time elapsed: ' + timeElapsed);
     if(timeElapsed === activityTimeOut) {
         stopCount();
     }

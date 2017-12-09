@@ -1,4 +1,8 @@
 
+/*
+window.onload = function() {
+    //console.log('window loaded');
+}*/
 
 // play media module
 var reproduceMedia = (function(){
@@ -57,36 +61,6 @@ var reproduceMedia = (function(){
         mediaContent.insertAdjacentHTML('afterbegin', loadMedia); 
     }
 
-    /*
-    var startCount = function(timeOut, mediaContentElement) {
-        if(!timer_is_on) {
-            timer_is_on = 1;
-            timedCount(timeOut, mediaContentElement);
-        }
-    }
-
-    var timedCount = function(mediaTimeOut, mediaContentElement) {
-        t = setTimeout(function(){ timedCount(mediaTimeOut); }, 1000);
-        timeElapsed = timeElapsed + 1;
-        if(timeElapsed === mediaTimeOut) {
-            stopCount(mediaPlaying, mediaContentElement);
-            mediaPlaying = mediaPlaying + 1;
-        }
-    }
-
-    var stopCount = function(media, mediaContentElement) {
-        clearTimeout(t);
-        timeElapsed = 0;
-        timer_is_on = 0;            
-        mediaContentElement.removeChild(mediaContentElement.firstChild);
-        
-        if(media < mediaNames.length) {
-            addMedia(mediaNames[media], mediaContentElement);
-            startCount(10);
-        }
-    }
-    */
-
     // time counter variables
     var playMedia = function() {
         var mediaContentElement = mediaContainer();
@@ -142,12 +116,6 @@ var reproduceMedia = (function(){
 document.addEventListener('DOMContentLoaded', function() {
     reproduceMedia.init();
 });
-
-
-
-
-
-
 
 
 

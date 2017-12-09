@@ -1,6 +1,7 @@
+
 // built-in node modules
 const fs = require('fs');
-const path = require('path');
+//const path = require('path');
 
 // third party modules
 const request = require('request');
@@ -36,6 +37,12 @@ var mediaObject = [
 var files = [];
 var files = mediaObject.map((element, index) => mediaObject[index].Name);
 
+var times = [];
+var times = mediaObject.map((element, index) => mediaObject[index].Duration);
+
+console.log(`The files array is: [${files}]`);
+console.log(`The times array is: [${times}]`);
+
 // check Media folder existence on C drive
 var folder = 'C:\\Media';
 var checkResult = checkFolder.checkMediaFolder(folder);
@@ -51,4 +58,6 @@ if (!checkResult) {
     // download all the files
     downloadFiles.downloadMediaFiles(files);
 }
+
+
 
