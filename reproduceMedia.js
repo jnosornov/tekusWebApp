@@ -1,4 +1,5 @@
 
+
 // play media module
 var reproduceMedia = (function(){
     
@@ -13,12 +14,18 @@ var reproduceMedia = (function(){
     var mediaSesionElement = document.querySelector(mediaSesionSelector);
 
     // variables
-    // incoming data from backend
+    // incoming data from backend 
     var mediaNames = ['Tekus_BG1.jpg','Arkbox.mp4','Tekus_BG2.jpg','Cronometro.mp4'];
     var mediaTimes = [5,-1,10,10];
     // html to add video or image
     var htmlVideo = "<video class='insertedVideo' controls autoplay><source src='C:/Media/%video%' type='video/mp4'></video>";
     var htmlImage = "<img class='insertedImage' src='C:/Media/%image%'>";
+    // timer variables
+    var t = 0;
+    var activityTimeOut;
+    var timeElapsed = 0;
+    var timer_is_on = 0;
+    var mediaPlaying = 0;
 
     // function to create a container for media to be add
     var mediaContainer = function() {
@@ -50,47 +57,38 @@ var reproduceMedia = (function(){
         mediaContent.insertAdjacentHTML('afterbegin', loadMedia); 
     }
 
-    // function to start a timer
     /*
-    var startCount = function(timeOut, timer_is_on) {
+    var startCount = function(timeOut, mediaContentElement) {
         if(!timer_is_on) {
             timer_is_on = 1;
-            timedCount(timeOut);
+            timedCount(timeOut, mediaContentElement);
         }
     }
 
-    // function to stop a timer
-    var stopCount = function(currentMedia) {
-        console.log(currentMedia);
-        currentMedia = currentMedia + 1;
-        clearTimeout(t);
-        timeElapsed = 0;
-        timer_is_on = 0;
-        mediaContentElement.removeChild(mediaContentElement.firstChild);
-        playMediaInRow(currentMedia);
+    var timedCount = function(mediaTimeOut, mediaContentElement) {
+        t = setTimeout(function(){ timedCount(mediaTimeOut); }, 1000);
+        timeElapsed = timeElapsed + 1;
+        if(timeElapsed === mediaTimeOut) {
+            stopCount(mediaPlaying, mediaContentElement);
+            mediaPlaying = mediaPlaying + 1;
+        }
     }
 
-    // function to count time
-    var timedCount = function(activityTimeOut) {
-        t = setTimeout(function(){ timedCount(activityTimeOut); }, 1000);
-        timeElapsed = timeElapsed + 1;
-        /*console.log('activity time out: ' + activityTimeOut);
-        console.log('time elapsed: ' + timeElapsed);
-        if(timeElapsed === activityTimeOut) {
-            stopCount(currentMedia);
+    var stopCount = function(media, mediaContentElement) {
+        clearTimeout(t);
+        timeElapsed = 0;
+        timer_is_on = 0;            
+        mediaContentElement.removeChild(mediaContentElement.firstChild);
+        
+        if(media < mediaNames.length) {
+            addMedia(mediaNames[media], mediaContentElement);
+            startCount(10);
         }
     }
     */
 
     // time counter variables
-    var t = 0;
-    var activityTimeOut;
-    var timeElapsed = 0;
-    var timer_is_on = 0;
-    var currentMedia = 0;
-
     var playMedia = function() {
-
         var mediaContentElement = mediaContainer();
         addMedia(mediaNames[0], mediaContentElement);
         startCount(10);
@@ -107,35 +105,33 @@ var reproduceMedia = (function(){
         function timedCount(mediaTimeOut) {
             t = setTimeout(function(){ timedCount(mediaTimeOut); }, 1000);
             timeElapsed = timeElapsed + 1;
-            if(timeElapsed === mediaTimeOut) stopCount(currentMedia);
+            if(timeElapsed === mediaTimeOut) {
+                stopCount(mediaPlaying);
+                mediaPlaying = mediaPlaying + 1;
+            }
         }
         
         // stop counter function
-        function stopCount(currentMedia) {
-            //console.log(currentMedia);
-            currentMedia = currentMedia + 1;
+        function stopCount(media) {
             clearTimeout(t);
             timeElapsed = 0;
-            timer_is_on = 0;
+            timer_is_on = 0;            
             mediaContentElement.removeChild(mediaContentElement.firstChild);
-            addMedia(mediaNames[currentMedia], mediaContentElement);
-            startCount(10);
-            //playMediaInRow(currentMedia);
-        }
-
-        // play media constinously, some bugs here, current Media no changing
-        /*function playMediaInRow(currentMedia) {
-            if(currentMedia > 0 && currentMedia < 4) {
-                addMedia(mediaNames[currentMedia], mediaContentElement);
+            
+            if(media < mediaNames.length) {
+                addMedia(mediaNames[media], mediaContentElement);
                 startCount(10);
+            } else {
+                //console.log('I am here');
+                mediaContentElement.classList.remove('content');
             }
-        }*/
+        }
     }
 
     var init = function() {
         // event listener that triggers media reproduction
         playIconElement.addEventListener('click', playMedia);
-    };
+    }
 
     return {
         init: init
